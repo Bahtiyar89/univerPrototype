@@ -1,0 +1,26 @@
+// Here you can add other styles
+ul.header-nav > li.active > a {
+    border-bottom: 1px solid white;
+}
+
+ul.header-nav > li > a:hover {
+    border-bottom: 1px solid white;
+}
+
+ul.header-nav > li.nav-item {
+    padding: 5px;
+}
+
+ul.sub-header-ul > li.nav-item {
+    display: block;
+    padding: 0px;
+}
+
+ul.sub-header-ul > li.active {
+    border-bottom: 1px solid #ddd;
+    background-color: #dddddd;
+}
+
+ul.sub-header-ul > li.active:hover {
+    background-color: #dddddd;
+}
