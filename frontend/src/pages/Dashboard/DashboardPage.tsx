@@ -232,7 +232,7 @@ const DashboardPage = () => {
               datasets: [
                 {
                   label: "My First dataset",
-                  backgroundColor: hexToRgba(getStyle("--cui-info"), 10),
+                  backgroundColor: hexToRgba(getStyle("--cui-info")!, 10),
                   borderColor: getStyle("--cui-info"),
                   pointHoverBackgroundColor: getStyle("--cui-info"),
                   borderWidth: 2,

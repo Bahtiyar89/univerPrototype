@@ -23,7 +23,7 @@ function App() {
   useEffect(() => {
     async function fetchDataparams() {
       try {
-        const response = await fetch(`${REACT_APP_BASE_URL}posts/`);
+        const response = await fetch(`${REACT_APP_BASE_URL}/posts/`);
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
