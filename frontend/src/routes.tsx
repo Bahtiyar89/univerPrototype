@@ -5,7 +5,8 @@ const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const EmployeeListPage = React.lazy(() => import("./pages/EmployeePage"));
 const EmployeeFormPage = React.lazy(() => import("./pages/EmployeeCreatePage"));
 const DemoViewPage = React.lazy(() => import("./pages/crm/demo/view"));
-const MapPage = React.lazy(() => import("pages/Map/MapPage"));
+const MapViewPage = React.lazy(() => import("pages/Map/MapPage"));
+const ChartViewPage = React.lazy(() => import("pages/Chart/ChartPage"));
 
 const routes = [
   { path: "/", name: "Home" },
@@ -27,7 +28,8 @@ const routes = [
     element: DemoViewPage,
   },
   // { path: '/theme', name: 'Theme', element: Colors, exact: true },
-  { path: "/theme/map", name: "Colors", element: MapPage },
+  { path: "/theme/map", name: "Colors", element: MapViewPage },
+  { path: "/theme/chart", name: "Typography", element: ChartViewPage },
   { path: "/theme/typography", name: "Typography", element: DemoViewPage },
   // { path: '/base', name: 'Base', element: Cards, exact: true },
   // { path: '/base/accordion', name: 'Accordion', element: Accordion },

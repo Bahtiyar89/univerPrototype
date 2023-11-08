@@ -193,7 +193,7 @@ const DashboardPage = () => {
           <CRow>
             <CCol sm={5}>
               <h4 id="traffic" className="card-title mb-0">
-                Traffic
+                Traffic1
               </h4>
               <div className="small text-medium-emphasis">
                 January - July 2021

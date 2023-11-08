@@ -13,6 +13,7 @@ import {
   cilSpeedometer,
   cilStar,
   cibOpenstreetmap,
+  cilChartLine,
 } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
 
@@ -35,11 +36,11 @@ const _nav: any = [
   },
   {
     component: CNavItem,
-    name: "Typography",
-    to: "/theme/typography",
-    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    name: "Скважины",
+    to: "/theme/chart",
+    icon: <CIcon icon={cilChartLine} customClassName="nav-icon" />,
   },
-  {
+  /*  {
     component: CNavTitle,
     name: "Components",
   },
@@ -296,7 +297,7 @@ const _nav: any = [
     name: "Docs",
     href: "https://coreui.io/react/docs/templates/installation/",
     icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
-  },
+  },*/
 ];
 
 export default _nav;
