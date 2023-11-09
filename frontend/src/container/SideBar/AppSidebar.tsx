@@ -22,6 +22,7 @@ const AppSidebar = () => {
 
   return (
     <CSidebar
+      className="sidebar sidebar-light sidebar-overlaid sidebar-end sidebar-lg"
       position="fixed"
       unfoldable={unfoldable}
       visible={sidebarShow}

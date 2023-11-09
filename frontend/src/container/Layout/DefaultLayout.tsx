@@ -7,7 +7,7 @@ const DefaultLayout = () => {
   return (
     <>
       <AppSidebar />
-      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+      <div className="wrapper d-flex flex-column min-vh-100">
         <AppHeader currHash={location?.pathname} />
         <div className="body flex-grow-1 px-3">
           <AppContent />
