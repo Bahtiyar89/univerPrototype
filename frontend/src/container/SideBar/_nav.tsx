@@ -40,7 +40,7 @@ const _nav: any = [
     to: "/theme/chart",
     icon: <CIcon icon={cilChartLine} customClassName="nav-icon" />,
   },
-  /*  {
+  {
     component: CNavTitle,
     name: "Components",
   },
@@ -122,7 +122,7 @@ const _nav: any = [
       },
     ],
   },
-  {
+  /*  {
     component: CNavGroup,
     name: "Buttons",
     to: "/buttons",
