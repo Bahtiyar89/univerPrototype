@@ -54,6 +54,7 @@ class WellSerializer(ModelSerializer):
                 ,'RecAltitude_Ustie'
                 ,'RecElevation'
                 ,'RecType'
+                ,'Rocks'
                )
     def create (self, validated_data):
         print(validated_data)
@@ -121,7 +122,9 @@ class RockSerializer(ModelSerializer):
                 ,'RecWellID'
                 ,'RecTop'
                 ,'RecBottom'
+                ,'Searches'
                 #,'RecStep'
+                #,'Well'
                )
     def create (self, validated_data):
         print(validated_data)
