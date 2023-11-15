@@ -22,6 +22,7 @@ import { getStyle } from "@coreui/utils";
 import tower from "assets/images/electric-tower.png";
 import CanvasMenu from "./CanvasMenu";
 import Drag from "components/Drag";
+import MockJson from "./MockJson";
 
 // fake data generator
 const getItems = (count: any) =>
@@ -62,10 +63,11 @@ const getListStyle = (isDraggingOver: any) => ({
 });
 
 const TabletScreen = (props: any) => {
-  const [items, setItems] = useState<any>(getItems(3));
+  const [items, setItems] = useState<any>(MockJson);
 
   const onDragEnd = (result: any) => {
     // dropped outside the list
+
     if (!result.destination) {
       return;
     }
@@ -77,9 +79,9 @@ const TabletScreen = (props: any) => {
     );
     setItems(itemss);
   };
-
+  console.log("result: ", MockJson);
   return (
-    <>
+    <div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable" direction="horizontal">
           {(provided, snapshot) => (
@@ -102,18 +104,14 @@ const TabletScreen = (props: any) => {
                     >
                       <CChart
                         type="line"
-                        width={400}
-                        height={400}
+                        width={200}
+                        height={item.height}
                         data={{
-                          labels: [
-                            10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 115,
-                            120, 130, 140, 150, 160, 170, 180, 190, 200, 210,
-                            220,
-                          ],
+                          labels: item.label,
                           datasets: [
                             {
                               indexAxis: "y",
-                              label: "My Second dataset",
+                              label: item.title,
                               backgroundColor: "rgba(151, 187, 205, 0.2)",
                               borderColor: "rgba(151, 187, 205, 1)",
                               pointBackgroundColor: "rgba(151, 187, 205, 1)",
@@ -158,11 +156,12 @@ const TabletScreen = (props: any) => {
                   )}
                 </Draggable>
               ))}
+              {provided.placeholder}
             </div>
           )}
         </Droppable>
       </DragDropContext>
-    </>
+    </div>
   );
 };
 
