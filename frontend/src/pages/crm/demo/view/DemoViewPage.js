@@ -14,6 +14,7 @@ import {
 } from "@coreui/react-pro";
 import Plot from "react-plotly.js";
 import FirstColumn from "./FirstColumn";
+import SecondColumn from "./SecondColumn";
 
 const DemoViewPage = () => {
   let result = new Array(100);
@@ -1019,6 +1020,7 @@ const DemoViewPage = () => {
           template: "...",
         }}
       />*/}
+
       <FirstColumn />
     </CCard>
   );
