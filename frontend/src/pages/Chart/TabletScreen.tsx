@@ -15,7 +15,7 @@ import {
 } from "@coreui/react-pro";
 import CIcon from "@coreui/icons-react";
 import { cilHamburgerMenu } from "@coreui/icons";
-import { CChart } from "@coreui/react-chartjs";
+import { CChart, CChartLine } from "@coreui/react-chartjs";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { getStyle } from "@coreui/utils";
@@ -34,6 +34,8 @@ const getItems = (count: any) =>
 // a little function to help us with reordering the result
 const reorder = (list: any, startIndex: any, endIndex: any) => {
   const result = Array.from(list);
+  console.log("result: ", result);
+
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
 
@@ -71,6 +73,13 @@ const TabletScreen = (props: any) => {
     if (!result.destination) {
       return;
     }
+    if (result.destination.index === result.source.index) {
+      const newItems = items.filter(
+        (item: any) => item.id !== result.draggableId
+      );
+      setItems(newItems);
+      return;
+    }
 
     const itemss = reorder(
       items,
@@ -79,7 +88,7 @@ const TabletScreen = (props: any) => {
     );
     setItems(itemss);
   };
-  console.log("result: ", MockJson);
+
   return (
     <div>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -102,21 +111,20 @@ const TabletScreen = (props: any) => {
                         provided.draggableProps.style
                       )}
                     >
-                      <CChart
-                        type="line"
+                      <CChartLine
                         width={200}
                         height={item.height}
                         data={{
-                          labels: item.label,
+                          labels: item.xlabels,
                           datasets: [
                             {
-                              indexAxis: "y",
                               label: item.title,
-                              backgroundColor: "rgba(151, 187, 205, 0.2)",
-                              borderColor: "rgba(151, 187, 205, 1)",
-                              pointBackgroundColor: "rgba(151, 187, 205, 1)",
-                              pointBorderColor: "#fff",
-                              data: [50, 12, 28, 29, 7, 25, 12, 70, 60, 100],
+                              backgroundColor: "transparent",
+                              borderColor: getStyle("--cui-success"),
+                              pointHoverBackgroundColor:
+                                getStyle("--cui-success"),
+                              borderWidth: 2,
+                              data: item.data,
                             },
                           ],
                         }}
@@ -130,6 +138,7 @@ const TabletScreen = (props: any) => {
                           },
                           scales: {
                             x: {
+                              position: "top",
                               grid: {
                                 color: getStyle(
                                   "--cui-border-color-translucent"
@@ -140,6 +149,8 @@ const TabletScreen = (props: any) => {
                               },
                             },
                             y: {
+                              beginAtZero: true,
+                              reverse: true,
                               grid: {
                                 color: getStyle(
                                   "--cui-border-color-translucent"
@@ -147,6 +158,9 @@ const TabletScreen = (props: any) => {
                               },
                               ticks: {
                                 color: getStyle("--cui-body-color"),
+                                stepSize: 10,
+                                autoSkip: false,
+                                display: item.ydisplay,
                               },
                             },
                           },

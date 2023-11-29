@@ -41,10 +41,6 @@ const _nav: any = [
     icon: <CIcon icon={cilChartLine} customClassName="nav-icon" />,
   },
   {
-    component: CNavTitle,
-    name: "Components",
-  },
-  {
     component: CNavGroup,
     name: "Base",
     to: "/base",
@@ -52,7 +48,7 @@ const _nav: any = [
     items: [
       {
         component: CNavItem,
-        name: "Accordion",
+        name: "Планшет",
         to: "/base/accordion",
       },
       {

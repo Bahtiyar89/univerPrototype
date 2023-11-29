@@ -32,7 +32,7 @@ const routes = [
   { path: "/theme/chart", name: "Typography", element: ChartViewPage },
   { path: "/theme/typography", name: "Typography", element: DemoViewPage },
   // { path: '/base', name: 'Base', element: Cards, exact: true },
-  // { path: '/base/accordion', name: 'Accordion', element: Accordion },
+  { path: "/base/accordion", name: "Accordion", element: DemoViewPage },
   // { path: '/base/breadcrumbs', name: 'Breadcrumbs', element: Breadcrumbs },
   // { path: '/base/cards', name: 'Cards', element: Cards },
   // { path: '/base/carousels', name: 'Carousel', element: Carousels },
