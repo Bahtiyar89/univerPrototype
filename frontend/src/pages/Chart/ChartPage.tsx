@@ -22,6 +22,7 @@ import CanvasMenu from "./CanvasMenu";
 import GraphicScreen from "./GraphicScreen";
 import ChartMapScreen from "./ChartMapScreen";
 import TabletScreen from "./TabletScreen";
+import TabletRenewed from "./TabletRenewed";
 
 const ChartPage = (props: any) => {
   const [canvas, setCanvas] = useState<boolean>(false);
@@ -39,7 +40,7 @@ const ChartPage = (props: any) => {
       ) : screenType === 2 ? (
         <GraphicScreen />
       ) : (
-        <TabletScreen />
+        <TabletRenewed />
       )}
 
       <CanvasMenu

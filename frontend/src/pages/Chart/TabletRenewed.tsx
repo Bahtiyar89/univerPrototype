@@ -1,30 +1,41 @@
 import React, { useState } from "react";
 import {
+  CAccordion,
+  CAccordionBody,
+  CAccordionHeader,
+  CAccordionItem,
+  CAvatar,
   CButton,
-  CCard,
-  CCardBody,
-  CCardHeader,
-  CCardText,
-  CCardTitle,
-  CCol,
-  CCollapse,
-  CContainer,
-  CFormInput,
-  CRow,
+  CButtonGroup,
+  CCloseButton,
+  COffcanvas,
+  COffcanvasBody,
+  COffcanvasHeader,
+  COffcanvasTitle,
 } from "@coreui/react-pro";
+import CIcon from "@coreui/icons-react";
+import { cilHamburgerMenu } from "@coreui/icons";
+import { CChart, CChartLine } from "@coreui/react-chartjs";
 import Plot from "react-plotly.js";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import FirstColumn from "./FirstColumn";
-import SecondColumn from "./SecondColumn";
-import MockJson2 from "pages/Chart/MockJson2";
-import "./style.css";
-import AddNewChart from "../components/AddNewChart";
+import { getStyle } from "@coreui/utils";
+import tower from "assets/images/electric-tower.png";
+import CanvasMenu from "./CanvasMenu";
+import Drag from "components/Drag";
+import MockJson from "./MockJson";
+import MockJson2 from "./MockJson2";
+
+// fake data generator
+const getItems = (count: any) =>
+  Array.from({ length: count }, (v, k) => k).map((k) => ({
+    id: `item-${k}`,
+    content: `item ${k}`,
+  }));
 
 // a little function to help us with reordering the result
 const reorder = (list: any, startIndex: any, endIndex: any) => {
   const result = Array.from(list);
-  console.log("startIndex: ", startIndex);
-  console.log("endIndex: ", endIndex);
+  console.log("result: ", result);
 
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
@@ -32,11 +43,13 @@ const reorder = (list: any, startIndex: any, endIndex: any) => {
   return result;
 };
 
+const grid = 0;
+
 const getItemStyle = (isDragging: any, draggableStyle: any) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: "none",
-  padding: 0,
-  margin: `0 0px 0 0px`,
+  padding: grid * 2,
+  margin: `0 ${grid}px 0 0`,
 
   // change background colour if dragging
   background: isDragging ? "lightgreen" : "grey",
@@ -46,26 +59,13 @@ const getItemStyle = (isDragging: any, draggableStyle: any) => ({
 });
 
 const getListStyle = (isDraggingOver: any) => ({
-  background: "grey",
+  background: isDraggingOver ? "lightblue" : "lightgrey",
   display: "flex",
-  padding: "0px",
+  padding: grid,
+  overflow: "auto",
 });
 
-const DemoViewPage = () => {
-  let result = new Array(100);
-  result = result
-    .fill(0)
-    .map(() => Math.round(Math.random() * (25000 - 8000 + 1)) + 8000);
-
-  let res = new Array(100);
-  res = res
-
-    .fill(0)
-    .map(() => Math.round(Math.random() * (3200 - 500 + 1)) + 500)
-    .sort((a, b) => a - b);
-  let res2 = new Array(100);
-  res2 = res2.fill(0).map(() => Math.round(Math.random() * (20 - 5 + 1)) + 5);
-
+const TabletRenewed = (props: any) => {
   const [items, setItems] = useState<any>(MockJson2);
 
   const onDragEnd = (result: any) => {
@@ -87,43 +87,11 @@ const DemoViewPage = () => {
       result.source.index,
       result.destination.index
     );
-
-    const lastEl = itemss.length - 1;
-    const newArr = itemss.map((item: any, index: any) => {
-      if (index == 0) {
-        return { ...item, yshowticklabels: true, l: 50, r: 1 };
-      } else if (lastEl == index) {
-        return { ...item, yshowticklabels: false, l: 1, r: 50 };
-      } else {
-        return { ...item, yshowticklabels: false, l: 1, r: 1 };
-      }
-    });
-
-    setItems(newArr);
+    setItems(itemss);
   };
-
-  const addNewChart = (item: any) => {
-    const newEventId = [...items, item];
-
-    const lastEl = newEventId.length - 1;
-    const newArr = newEventId.map((item: any, index: any) => {
-      if (index == 0) {
-        return { ...item, yshowticklabels: true, l: 50, r: 1 };
-      } else if (lastEl == index) {
-        return { ...item, yshowticklabels: false, l: 1, r: 50 };
-      } else {
-        return { ...item, yshowticklabels: false, l: 1, r: 1 };
-      }
-    });
-
-    setItems(newArr);
-  };
-
-  console.log("it: ", items);
 
   return (
-    <div style={{ width: "100%" }}>
-      <AddNewChart addChart={addNewChart} />
+    <div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable" direction="horizontal">
           {(provided, snapshot) => (
@@ -193,6 +161,61 @@ const DemoViewPage = () => {
                           },
                         }}
                       />
+                      {/* <CChartLine
+                        width={200}
+                        height={item.height}
+                        data={{
+                          labels: item.xlabels,
+                          datasets: [
+                            {
+                              label: item.title,
+                              backgroundColor: "transparent",
+                              borderColor: getStyle("--cui-success"),
+                              pointHoverBackgroundColor:
+                                getStyle("--cui-success"),
+                              borderWidth: 2,
+                              data: item.data,
+                            },
+                          ],
+                        }}
+                        options={{
+                          plugins: {
+                            legend: {
+                              labels: {
+                                color: getStyle("--cui-body-color"),
+                              },
+                            },
+                          },
+                          scales: {
+                            x: {
+                              position: "top",
+                              grid: {
+                                color: getStyle(
+                                  "--cui-border-color-translucent"
+                                ),
+                              },
+                              ticks: {
+                                color: getStyle("--cui-body-color"),
+                              },
+                            },
+                            y: {
+                              beginAtZero: true,
+                              reverse: true,
+                              grid: {
+                                color: getStyle(
+                                  "--cui-border-color-translucent"
+                                ),
+                              },
+                              ticks: {
+                                color: getStyle("--cui-body-color"),
+                                stepSize: 10,
+                                autoSkip: false,
+                                display: item.ydisplay,
+                              },
+                            },
+                          },
+                        }}
+                      />*/}
                     </div>
                   )}
                 </Draggable>
@@ -206,4 +229,4 @@ const DemoViewPage = () => {
   );
 };
 
-export default DemoViewPage;
+export default TabletRenewed;
