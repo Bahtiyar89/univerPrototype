@@ -23,6 +23,7 @@ import GraphicScreen from "./GraphicScreen";
 import ChartMapScreen from "./ChartMapScreen";
 import TabletScreen from "./TabletScreen";
 import TabletRenewed from "./TabletRenewed";
+import ChartCanvasMenu from "./ChartCanvasMenu";
 
 const ChartPage = (props: any) => {
   const [canvas, setCanvas] = useState<boolean>(false);

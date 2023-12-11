@@ -14,6 +14,7 @@ import {
   COffcanvasTitle,
 } from "@coreui/react-pro";
 import tower from "assets/images/electric-tower.png";
+import ChartCanvasMenu from "./ChartCanvasMenu";
 
 interface Props {
   canvas: boolean;
@@ -30,6 +31,7 @@ const CanvasMenu = ({
   handleClick,
   handleScreenType,
 }: Props) => {
+  const [items, setItems] = useState<any>(ChartCanvasMenu);
   return (
     <COffcanvas
       style={{ width: 300 }}
@@ -53,29 +55,36 @@ const CanvasMenu = ({
         <CCloseButton className="text-reset" onClick={handleCanvas} />
       </COffcanvasHeader>
       <COffcanvasBody>
-        <CAccordion style={{ paddingTop: "30%" }} activeItemKey={2}>
-          <CAccordionItem itemKey={1}>
-            <CAccordionHeader onClick={() => handleClick?.("1")}>
-              Скважина 1
-            </CAccordionHeader>
-            <CAccordionBody>
-              <CButtonGroup
-                role="group"
-                aria-label="Basic mixed styles example"
-              >
-                <CButton onClick={() => handleScreenType?.(1)} color="danger">
-                  Карта
-                </CButton>
-                <CButton onClick={() => handleScreenType?.(2)} color="warning">
-                  График
-                </CButton>
-                <CButton onClick={() => handleScreenType?.(3)} color="success">
-                  Планшет
-                </CButton>
-              </CButtonGroup>
-            </CAccordionBody>
-          </CAccordionItem>
-        </CAccordion>
+        {items.map((item: any, index: number) => (
+          <>
+            <CAccordion
+              style={{ paddingTop: index == 0 ? "30%" : 10 }}
+              activeItemKey={2}
+            >
+              <CAccordionItem itemKey={1}>
+                <CAccordionHeader onClick={() => handleClick?.("1")}>
+                  {item.name}
+                </CAccordionHeader>
+                <CAccordionBody>
+                  <div className="d-grid gap-2">
+                    {item.params.map((i: any, index: number) => {
+                      console.log("iii ", i);
+
+                      return (
+                        <CButton
+                          onClick={() => handleScreenType?.(1)}
+                          color={i.color}
+                        >
+                          {i.name}
+                        </CButton>
+                      );
+                    })}
+                  </div>
+                </CAccordionBody>
+              </CAccordionItem>
+            </CAccordion>
+          </>
+        ))}
       </COffcanvasBody>
     </COffcanvas>
   );

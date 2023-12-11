@@ -2,8 +2,7 @@ import { DemoGridPage } from "./pages";
 import React from "react";
 
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
-const EmployeeListPage = React.lazy(() => import("./pages/EmployeePage"));
-const EmployeeFormPage = React.lazy(() => import("./pages/EmployeeCreatePage"));
+const TabletPage = React.lazy(() => import("./pages/TabletPage"));
 const DemoViewPage = React.lazy(() => import("./pages/crm/demo/view"));
 const MapViewPage = React.lazy(() => import("pages/Map/MapPage"));
 const ChartViewPage = React.lazy(() => import("pages/Chart/ChartPage"));
@@ -16,12 +15,7 @@ const routes = [
     name: "Demonstration",
     element: DemoGridPage,
   },
-  { path: "/hr", name: "Employee List", element: EmployeeListPage },
-  {
-    path: "/hr/create",
-    name: "Employee Form",
-    element: EmployeeFormPage,
-  },
+  { path: "/tablet", name: "Tablet", element: TabletPage },
   {
     path: "/crm/list-demonstration/id",
     name: "Demonstration",
