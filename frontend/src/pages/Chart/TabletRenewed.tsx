@@ -1,42 +1,10 @@
-import React, { useState } from "react";
-import {
-  CAccordion,
-  CAccordionBody,
-  CAccordionHeader,
-  CAccordionItem,
-  CAvatar,
-  CButton,
-  CButtonGroup,
-  CCloseButton,
-  COffcanvas,
-  COffcanvasBody,
-  COffcanvasHeader,
-  COffcanvasTitle,
-} from "@coreui/react-pro";
-import CIcon from "@coreui/icons-react";
-import { cilHamburgerMenu } from "@coreui/icons";
-import { CChart, CChartLine } from "@coreui/react-chartjs";
+import React, { useState, useEffect } from "react";
 import Plot from "react-plotly.js";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { getStyle } from "@coreui/utils";
-import tower from "assets/images/electric-tower.png";
-import CanvasMenu from "./CanvasMenu";
-import Drag from "components/Drag";
-import MockJson from "./MockJson";
-import MockJson2 from "./MockJson2";
-
-// fake data generator
-const getItems = (count: any) =>
-  Array.from({ length: count }, (v, k) => k).map((k) => ({
-    id: `item-${k}`,
-    content: `item ${k}`,
-  }));
 
 // a little function to help us with reordering the result
 const reorder = (list: any, startIndex: any, endIndex: any) => {
   const result = Array.from(list);
-  console.log("result: ", result);
-
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
 
@@ -66,7 +34,7 @@ const getListStyle = (isDraggingOver: any) => ({
 });
 
 const TabletRenewed = (props: any) => {
-  const [items, setItems] = useState<any>(MockJson2);
+  const [items, setItems] = useState<any>([]);
 
   const onDragEnd = (result: any) => {
     // dropped outside the list
@@ -87,8 +55,35 @@ const TabletRenewed = (props: any) => {
       result.source.index,
       result.destination.index
     );
-    setItems(itemss);
+
+    const lastEl = itemss.length - 1;
+    const newArr = itemss.map((item: any, index: any) => {
+      if (index == 0) {
+        return { ...item, yshowticklabels: true, l: 50, r: 1 };
+      } else if (lastEl == index) {
+        return { ...item, yshowticklabels: false, l: 1, r: 50 };
+      } else {
+        return { ...item, yshowticklabels: false, l: 1, r: 1 };
+      }
+    });
+
+    setItems(newArr);
   };
+
+  useEffect(() => {
+    const lastEl = props.chartObjects.length - 1;
+    const newArr = props.chartObjects.map((item: any, index: any) => {
+      if (index == 0) {
+        return { ...item, yshowticklabels: true, l: 50, r: 1 };
+      } else if (lastEl == index) {
+        return { ...item, yshowticklabels: false, l: 1, r: 50 };
+      } else {
+        return { ...item, yshowticklabels: false, l: 1, r: 1 };
+      }
+    });
+
+    setItems(newArr);
+  }, [props.chartObjects]);
 
   return (
     <div>

@@ -22,6 +22,7 @@ interface Props {
   handleCanvas?: () => void;
   handleClick?: (item: any) => void;
   handleScreenType?: (type: any) => void;
+  newColumn?: (name: any) => void;
 }
 
 const CanvasMenu = ({
@@ -30,8 +31,13 @@ const CanvasMenu = ({
   handleCanvas,
   handleClick,
   handleScreenType,
+  newColumn,
 }: Props) => {
   const [items, setItems] = useState<any>(ChartCanvasMenu);
+
+  const handleChartColumn = (name: any) => {
+    newColumn?.(name);
+  };
   return (
     <COffcanvas
       style={{ width: 300 }}
@@ -68,11 +74,9 @@ const CanvasMenu = ({
                 <CAccordionBody>
                   <div className="d-grid gap-2">
                     {item.params.map((i: any, index: number) => {
-                      console.log("iii ", i);
-
                       return (
                         <CButton
-                          onClick={() => handleScreenType?.(1)}
+                          onClick={() => handleChartColumn(i.name)}
                           color={i.color}
                         >
                           {i.name}
