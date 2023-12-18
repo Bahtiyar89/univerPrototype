@@ -16,7 +16,7 @@ import Plot from "react-plotly.js";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import FirstColumn from "./FirstColumn";
 import SecondColumn from "./SecondColumn";
-import MockJson2 from "pages/Chart/MockJson2";
+import MockJson2 from "./MockJson2";
 import "./style.css";
 import AddNewChart from "../components/AddNewChart";
 

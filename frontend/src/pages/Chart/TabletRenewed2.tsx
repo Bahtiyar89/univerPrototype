@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Plot from "react-plotly.js";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { traces } from "./MockJson2";
+import { graphs } from "./MockJson2";
 
 // a little function to help us with reordering the result
 const reorder = (list: any, startIndex: any, endIndex: any) => {
@@ -34,7 +34,7 @@ const getListStyle = (isDraggingOver: any) => ({
   overflow: "auto",
 });
 
-const TabletRenewed = (props: any) => {
+const TabletRenewed2 = (props: any) => {
   const [items, setItems] = useState<any>([]);
 
   const onDragEnd = (result: any) => {
@@ -86,9 +86,71 @@ const TabletRenewed = (props: any) => {
     setItems(newArr);
   }, [props.chartObjects]);
 
+  const trace1 = {
+    x: [1, 2, 3, 4, 5],
+    y: [1, 3, 2, 3, 1],
+    mode: "lines+markers",
+    name: "linear",
+    line: { shape: "linear" },
+    type: "scatter",
+  };
+
+  var trace2 = {
+    x: [1, 2, 3, 4, 5],
+    y: [6, 8, 7, 8, 6],
+    mode: "lines+markers",
+    name: "spline",
+    text: [
+      'tweak line smoothness<br>with "smoothing" in line object',
+      'tweak line smoothness<br>with "smoothing" in line object',
+      'tweak line smoothness<br>with "smoothing" in line object',
+      'tweak line smoothness<br>with "smoothing" in line object',
+      'tweak line smoothness<br>with "smoothing" in line object',
+      'tweak line smoothness<br>with "smoothing" in line object',
+    ],
+    line: { shape: "spline" },
+    type: "scatter",
+  };
+
+  const trace3 = {
+    x: [1, 2, 3, 4, 5],
+    y: [11, 13, 12, 13, 11],
+    mode: "lines+markers",
+    name: "vhv",
+    line: { shape: "vhv" },
+    type: "scatter",
+  };
+
+  const trace4 = {
+    x: [1, 2, 3, 4, 5],
+    y: [16, 18, 17, 18, 16],
+    mode: "lines+markers",
+    name: "hvh",
+    line: { shape: "hvh" },
+    type: "scatter",
+  };
+
+  const trace5 = {
+    x: [1, 2, 3, 4, 5],
+    y: [21, 23, 22, 23, 21],
+    mode: "lines+markers",
+    name: "vh",
+    line: { shape: "vh" },
+    type: "scatter",
+  };
+
+  const trace6 = {
+    x: [1, 2, 3, 4, 5],
+    y: [26, 28, 27, 28, 26],
+    mode: "lines+markers",
+    name: "hv",
+    line: { shape: "hv" },
+    type: "scatter",
+  };
+
   return (
     <div>
-      <DragDropContext onDragEnd={onDragEnd}>
+      {/*<DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable" direction="horizontal">
           {(provided, snapshot) => (
             <div
@@ -157,61 +219,82 @@ const TabletRenewed = (props: any) => {
                           },
                         }}
                       />
-                      {/* <CChartLine
-                        width={200}
-                        height={item.height}
-                        data={{
-                          labels: item.xlabels,
-                          datasets: [
-                            {
-                              label: item.title,
-                              backgroundColor: "transparent",
-                              borderColor: getStyle("--cui-success"),
-                              pointHoverBackgroundColor:
-                                getStyle("--cui-success"),
-                              borderWidth: 2,
-                              data: item.data,
-                            },
-                          ],
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>*/}
+
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="droppable" direction="horizontal">
+          {(provided, snapshot) => (
+            <div
+              ref={provided.innerRef}
+              style={getListStyle(snapshot.isDraggingOver)}
+              {...provided.droppableProps}
+            >
+              {graphs.map((item: any, index: any) => (
+                <Draggable key={item.id} draggableId={item.id} index={index}>
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      style={getItemStyle(
+                        snapshot.isDragging,
+                        provided.draggableProps.style
+                      )}
+                    >
+                      <Plot
+                        config={{
+                          displayModeBar: false,
+                          displaylogo: false,
                         }}
-                        options={{
-                          plugins: {
-                            legend: {
-                              labels: {
-                                color: getStyle("--cui-body-color"),
-                              },
+                        data={item.traces}
+                        layout={{
+                          dragmode: false,
+                          showlegend: true,
+                          hoverdistance: 1,
+                          width: index === 0 ? 200 : 200,
+                          height: 750,
+                          margin: { l: item.l, r: item.r },
+
+                          xaxis: {
+                            side: "top",
+                            anchor: "y",
+                            domain: [0, 20],
+                            linecolor: "black",
+                            linewidth: 2,
+                            mirror: true,
+                            showline: true,
+                            tickangle: 0,
+                            ticks: "inside",
+                            title: { text: item.name },
+                          },
+
+                          yaxis: {
+                            anchor: "x",
+                            autorange: "reversed",
+                            dtick: 250,
+                            linecolor: "black",
+                            linewidth: 2,
+                            mirror: true,
+                            showticklabels: item.yshowticklabels,
+                            tick0: 0,
+                            tickmode: "linear",
+                          },
+                          legend: {
+                            x: 0,
+                            font: {
+                              size: 8,
                             },
                           },
-                          scales: {
-                            x: {
-                              position: "top",
-                              grid: {
-                                color: getStyle(
-                                  "--cui-border-color-translucent"
-                                ),
-                              },
-                              ticks: {
-                                color: getStyle("--cui-body-color"),
-                              },
-                            },
-                            y: {
-                              beginAtZero: true,
-                              reverse: true,
-                              grid: {
-                                color: getStyle(
-                                  "--cui-border-color-translucent"
-                                ),
-                              },
-                              ticks: {
-                                color: getStyle("--cui-body-color"),
-                                stepSize: 10,
-                                autoSkip: false,
-                                display: item.ydisplay,
-                              },
-                            },
-                          },
                         }}
-                      />*/}
+                      />
                     </div>
                   )}
                 </Draggable>
@@ -225,4 +308,4 @@ const TabletRenewed = (props: any) => {
   );
 };
 
-export default TabletRenewed;
+export default TabletRenewed2;

@@ -15,16 +15,12 @@ import {
 } from "@coreui/react-pro";
 import CIcon from "@coreui/icons-react";
 import { cilHamburgerMenu } from "@coreui/icons";
-import { CChart } from "@coreui/react-chartjs";
-import { getStyle } from "@coreui/utils";
-import tower from "assets/images/electric-tower.png";
 import CanvasMenu from "./CanvasMenu";
-import MockJson2 from "./MockJson2";
+import { traces } from "./MockJson2";
 import GraphicScreen from "./GraphicScreen";
 import ChartMapScreen from "./ChartMapScreen";
-import TabletScreen from "./TabletScreen";
 import TabletRenewed from "./TabletRenewed";
-import ChartCanvasMenu from "./ChartCanvasMenu";
+import TabletRenewed2 from "./TabletRenewed2";
 
 const ChartPage = (props: any) => {
   const [canvas, setCanvas] = useState<boolean>(false);
@@ -34,7 +30,7 @@ const ChartPage = (props: any) => {
 
   const newColumn = (name: any) => {
     console.log("name: ", name);
-    const found = MockJson2.filter((element) => element.name === name);
+    const found = traces.filter((element) => element.name === name);
     console.log("found: ", Object.keys(found).length);
     if (Object.keys(found).length) {
       const search = chartObjects.find((el: any) => el.name === name);
@@ -46,6 +42,7 @@ const ChartPage = (props: any) => {
       }
     }
   };
+  console.log("traces: ", traces);
 
   return (
     <>
@@ -59,7 +56,7 @@ const ChartPage = (props: any) => {
       ) : screenType === 2 ? (
         <GraphicScreen />
       ) : (
-        <TabletRenewed chartObjects={chartObjects} />
+        <TabletRenewed2 chartObjects={traces} />
       )}
 
       <CanvasMenu
