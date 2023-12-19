@@ -115,6 +115,8 @@ export const graphs = [
     r: 1,
     traces: [
       {
+        fillcolor: "red",
+        fill: "tozerox",
         x: [
           15, 9, 12, 15, 18, 12, 11, 16, 10, 17, 16, 8, 15, 6, 12, 10, 18, 12,
           20, 18, 19, 5, 12, 11, 14, 16, 16, 11, 9, 17, 19, 13, 8, 10, 15, 20,
@@ -154,9 +156,11 @@ export const graphs = [
     yshowticklabels: false,
     l: 1,
     r: 50,
-    fill: "tozerox",
+
     traces: [
       {
+        fillcolor: "red",
+        fill: "tozerox",
         x: [
           15, 9, 12, 15, 18, 12, 11, 16, 10, 17, 16, 8, 15, 6, 12, 10, 18, 12,
           20, 18, 19, 5, 12, 11, 14, 16, 16, 11, 9, 17, 19, 13, 8, 10, 15, 20,

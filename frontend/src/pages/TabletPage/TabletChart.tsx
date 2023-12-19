@@ -156,7 +156,8 @@ const TabletChart = (props: any) => {
                           {
                             mode: "lines+markers",
                             line: { color: item.color },
-                            type: "scatter",
+                            fillcolor: "red",
+                            fill: "tozeroy",
                             x: item.x,
                             xaxis: "x",
                             y: item.y,
