@@ -20,6 +20,7 @@ interface Props {
   canvas: boolean;
   well: string;
   handleCanvas?: () => void;
+  handleChartColumn: () => void;
   handleClick?: (item: any) => void;
   handleScreenType?: (type: any) => void;
   newColumn?: (name: any) => void;
@@ -30,14 +31,12 @@ const CanvasMenu = ({
   well,
   handleCanvas,
   handleClick,
+  handleChartColumn,
   handleScreenType,
   newColumn,
 }: Props) => {
   const [items, setItems] = useState<any>(ChartCanvasMenu);
 
-  const handleChartColumn = (name: any) => {
-    newColumn?.(name);
-  };
   return (
     <COffcanvas
       style={{ width: 300 }}
@@ -76,7 +75,7 @@ const CanvasMenu = ({
                     {item.params.map((i: any, index: number) => {
                       return (
                         <CButton
-                          onClick={() => handleChartColumn(i.name)}
+                          onClick={() => handleChartColumn()}
                           color={i.color}
                         >
                           {i.name}

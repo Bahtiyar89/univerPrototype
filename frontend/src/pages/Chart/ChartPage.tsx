@@ -8,6 +8,11 @@ import {
   CButton,
   CButtonGroup,
   CCloseButton,
+  CModal,
+  CModalBody,
+  CModalFooter,
+  CModalHeader,
+  CModalTitle,
   COffcanvas,
   COffcanvasBody,
   COffcanvasHeader,
@@ -16,13 +21,14 @@ import {
 import CIcon from "@coreui/icons-react";
 import { cilHamburgerMenu } from "@coreui/icons";
 import CanvasMenu from "./CanvasMenu";
-import { traces } from "./MockJson2";
+import { graphs, traces } from "./MockJson2";
 import GraphicScreen from "./GraphicScreen";
 import ChartMapScreen from "./ChartMapScreen";
 import TabletRenewed from "./TabletRenewed";
 import TabletRenewed2 from "./TabletRenewed2";
 
 const ChartPage = (props: any) => {
+  const [modal, setModal] = useState<boolean>(false);
   const [canvas, setCanvas] = useState<boolean>(false);
   const [well, setWell] = useState("");
   const [screenType, setScreenType] = useState(3);
@@ -44,6 +50,10 @@ const ChartPage = (props: any) => {
   };
   console.log("traces: ", traces);
 
+  const handleChartColumn = () => {
+    setModal(true);
+    setCanvas(false);
+  };
   return (
     <>
       <CIcon
@@ -56,17 +66,46 @@ const ChartPage = (props: any) => {
       ) : screenType === 2 ? (
         <GraphicScreen />
       ) : (
-        <TabletRenewed2 chartObjects={traces} />
+        <TabletRenewed2 chartObjects={graphs} />
       )}
 
       <CanvasMenu
         canvas={canvas}
         well={well}
+        handleChartColumn={handleChartColumn}
         handleCanvas={() => setCanvas(false)}
         handleClick={(item: any) => setWell(item)}
         handleScreenType={(t: any) => setScreenType(t)}
         newColumn={(n: any) => newColumn(n)}
       />
+      <CModal
+        size="lg"
+        visible={modal}
+        onClose={() => setModal(false)}
+        aria-labelledby="LiveDemoExampleLabel"
+      >
+        <CModalHeader closeButton={true}>
+          <CModalTitle id="LiveDemoExampleLabel">
+            Добавление параметр
+          </CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around",
+            }}
+          >
+            <CButton onClick={() => console.log("dddd")} color="primary">
+              Добавление в текуший колонку
+            </CButton>
+            <CButton onClick={() => console.log("dddd")} color="success">
+              Добавление в новую колонку
+            </CButton>
+          </div>
+        </CModalBody>
+      </CModal>
     </>
   );
 };
