@@ -14,6 +14,7 @@ import {
   cilStar,
   cibOpenstreetmap,
   cilChartLine,
+  cilTablet,
 } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
 
@@ -40,9 +41,11 @@ const _nav: any = [
     to: "/theme/chart",
     icon: <CIcon icon={cilChartLine} customClassName="nav-icon" />,
   },
-  /*  {
-    component: CNavTitle,
-    name: "Components",
+  {
+    component: CNavItem,
+    name: "Планшет",
+    to: "/tablet",
+    icon: <CIcon icon={cilTablet} customClassName="nav-icon" />,
   },
   {
     component: CNavGroup,
@@ -52,7 +55,7 @@ const _nav: any = [
     items: [
       {
         component: CNavItem,
-        name: "Accordion",
+        name: "Планшет",
         to: "/base/accordion",
       },
       {
@@ -122,7 +125,7 @@ const _nav: any = [
       },
     ],
   },
-  {
+  /*  {
     component: CNavGroup,
     name: "Buttons",
     to: "/buttons",
