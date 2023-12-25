@@ -158,3 +158,36 @@ class UploadedFileSerializer(ModelSerializer):
     class Meta:
         model = CUploadedFile
         fields = ('RecID', 'RecFile', 'RecUploaded_on',)
+        
+class ZoneSerializer(ModelSerializer):
+    class Meta:
+        model = CZone
+        fields=('RecID', 'RecName', 'RecDepthStart', 'RecDepthfinish', 'RecDefaultColor')
+    def create (self, validated_data):
+        print(validated_data)
+        return CZone.objects.create(**validated_data)
+    #def update (self, instance, validated_data):
+    #    print(instance)
+    
+class CalculationSerializer(ModelSerializer):
+    class Meta:
+        model = CCalculation
+        fields=('RecID'
+                ,'RecFormula'
+               )
+    def create (self, validated_data):
+        print(validated_data)
+        return CCalculation.objects.create(**validated_data)
+    
+class FormulaVariablesSerializer(ModelSerializer):
+    class Meta:
+        model = CFormulaVariables
+        fields=('RecID'
+                ,'RecFormulaID'
+                ,'RecVariable'
+                ,'RecDictionaryPropertyID'
+                ,'RecDescription'
+               )
+    def create (self, validated_data):
+        print(validated_data)
+        return CFormulaVariables.objects.create(**validated_data)

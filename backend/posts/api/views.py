@@ -22,6 +22,9 @@ from ..models import CWell
 from ..models import CRock
 from ..models import CRockResearch
 from ..models import CRockParamValue
+from ..models import CZone
+from ..models import CCalculation
+from ..models import CFormulaVariables
 
 from .serializers import * #PostSerializer, PlaceHolderSerializer
 
@@ -834,4 +837,101 @@ class FileUpload(APIView):
         return Response(
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
-        )
+        )   
+class Zone(ModelViewSet):
+    queryset = CZone.objects.filter( RecID = 1 )
+    serializer_class= ZoneSerializer
+    http_method_names = ['delete', 'post', 'get']
+    
+    def get_queryset(self):
+        SearchRecID = self.request.GET.get('RecID')
+        print(SearchRecID)
+        if SearchRecID == '-1':
+            queryset = CZone.objects.all()
+        else:
+            queryset = CZone.objects.filter( RecID = SearchRecID )
+        return queryset
+    
+    @action(methods=['delete'], detail=False)
+    def delete(self, request):
+        queryset = CZone.objects.filter( RecID = request.POST.get('RecID') )
+        queryset.delete()
+        return Response(request.POST.get('RecID'))
+    
+class FormulaVariables(ModelViewSet):
+    queryset = CFormulaVariables.objects.filter( RecID = 1 )
+    serializer_class= FormulaVariablesSerializer
+    http_method_names = ['delete', 'post', 'get', 'put','patch']
+    
+    def retrieve(self, request, *args, **kwargs):
+        # ret = super(StoryViewSet, self).retrieve(request)
+        return Response({'key': 'single value'})
+
+    def list(self, request, *args, **kwargs):
+        # ret = super(StoryViewSet, self).list(request)
+        if self.request.GET.get('RecID') != None:            
+            SearchRecID = self.request.GET.get('RecID')
+            queryset = CFormulaVariables.objects.filter( RecID = SearchRecID )
+        else:
+            SearchRecID = '-1'
+            queryset = CFormulaVariables.objects.all()
+                
+        return Response({'Result': [queryset.as_dict() for queryset in queryset]})
+    
+    @action(methods=['delete'], detail=False)
+    def delete(self, request):
+        queryset = CFormulaVariables.objects.filter( RecID = request.POST.get('RecID') )
+        queryset.delete()
+        return Response(request.POST.get('RecID'))
+    
+class Calculation(ModelViewSet):
+    queryset = CCalculation.objects.filter( RecID = 1 )
+    serializer_class= CalculationSerializer
+    http_method_names = ['delete', 'post', 'get', 'put','patch']
+    
+    def retrieve(self, request, *args, **kwargs):
+        # ret = super(StoryViewSet, self).retrieve(request)
+        return Response({'key': 'single value'})
+
+    def list(self, request, *args, **kwargs):
+        # ret = super(StoryViewSet, self).list(request)
+        if self.request.GET.get('RecID') != None:            
+            SearchRecID = self.request.GET.get('RecID')
+            queryset = CCalculation.objects.filter( RecID = SearchRecID )
+        else:
+            SearchRecID = '-1'
+            queryset = CCalculation.objects.all()
+                
+        return Response({'Result': [queryset.as_dict() for queryset in queryset]})
+    
+    @action(methods=['delete'], detail=False)
+    def delete(self, request):
+        queryset = CCalculation.objects.filter( RecID = request.POST.get('RecID') )
+        queryset.delete()
+        return Response(request.POST.get('RecID'))
+    
+    @action(methods=['patch'], detail=False)
+    def patch(self, request):
+        recID = request.POST.get('RecID')
+        print('patch -> Calculation, RecID ->', recID)
+        calc = CCalculation.objects.get(RecID = recID)
+        if calc == None:
+            return Response({'Method': 'CalcByFormula', 'status': 'ERROR', 'Descr': 'with recID record not found', 'Details': {'RecID': recID}})
+        if request.POST.get('WellID') == None:
+            return Response({'Method': 'CalcByFormula', 'status': 'ERROR', 'Descr': 'WellID is not accessible', 'Details': {'RecID': recID}})
+        wellID = request.POST.get('WellID')
+        print('patch -> Calculation, wellID ->', wellID)
+        recCalc = calc.TryCalc(wellID)
+        recCalcRes = []
+        for recalc in recCalc:
+            resRec = {}
+            resRec['depth'] = recalc
+            resRec['value'] = recCalc[recalc]
+            recCalcRes.append(resRec)
+        #print(recCalc)
+        return Response({'Method': 'CalcByFormula', 'status': 'OK', 'Descr': 'formula -> '+calc.RecFormula+', wellID -> '+wellID, 'Result': recCalcRes})
+    
+class LetsCalc (ModelViewSet):
+    queryset = CCalculation.objects.filter( RecID = 1 )
+    serializer_class= CalculationSerializer
+    http_method_names = ['get']
