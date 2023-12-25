@@ -341,3 +341,94 @@ class CAllias(models.Model):
     RecAllias = models.CharField(max_length=100)
     RecTable = models.CharField(max_length=30)
     RecField = models.CharField(max_length=40)
+    
+    
+class CZone (models.Model):
+    RecID = models.BigAutoField(primary_key=True)
+    RecName = models.CharField(max_length=100, default = '')
+    RecDepthStart = models.FloatField(default = -1)
+    RecDepthfinish = models.FloatField(default = -1)
+    RecDefaultColor = models.CharField(max_length=100, default = '')
+    
+class CCalculation(models.Model):
+    RecID = models.BigAutoField(primary_key=True)
+    RecFormula = models.CharField(max_length=100, default = '')
+    #RecFile = models.FileField()
+    #RecUploaded_on = models.DateTimeField(auto_now_add=True)
+    
+    def as_dict(self):
+        variables = CFormulaVariables.objects.filter(RecFormulaID = self.RecID)
+        return {
+            'RecID': self.RecID
+            ,'RecFormula': self.RecFormula
+            ,'Variables': variables
+            #,'RecFile':self.RecFile
+        }
+    
+    def TryCalc(self, wellID):
+        print(' *** TryCalc ***')
+        print(self.RecFormula)
+        totalDic = {}
+        varDic = {}
+        resDic = {}
+        varsCalc = CFormulaVariables.objects.filter(RecFormulaID = self.RecID)
+        #print('varsCalc ->',[varsCalc.as_dict() for varsCalc in varsCalc])
+        for varCalc in varsCalc:
+            varDic[varCalc.RecDictionaryPropertyID] = varCalc.RecVariable
+        #well = CWell.objects.get(RecID = wellID)
+        rock = CRock.objects.filter(RecWellID = wellID).values('RecID')
+        #print ('rock ->',rock)
+        search = CRockResearch.objects.filter(RecRockID__in = rock).values('RecID')
+        #print('search ->',search)
+        paramValues = CRockParamValue.objects.filter(
+            RecDictionaryPropertyID__in = varsCalc.values('RecDictionaryPropertyID')
+            , RecRockResearchID__in = search
+        ).order_by('RecDepth', 'RecDictionaryPropertyID')
+        #print([paramValues.as_dict() for paramValues in paramValues])
+        for paramValue in paramValues:
+            #locParam[varDic[paramValue.RecDictionaryPropertyID]] = paramValue.RecValue
+            #print('paramValue.RecDepth -> ',paramValue.RecDepth)
+            try:
+                locParams = totalDic[paramValue.RecDepth]
+                if locParams == None:
+                    locParams = {}
+            except:
+                locParams = {}
+            locParams[varDic[paramValue.RecDictionaryPropertyID]] = paramValue.RecValue
+            #print(paramValue.RecDepth,'->',locParams)
+            totalDic[paramValue.RecDepth] = locParams
+        
+        for totalDic_Rec in totalDic:
+            formulaLoc = self.RecFormula
+            locParams = totalDic[totalDic_Rec]
+            for locParam in locParams:
+                key = locParam
+                val = locParams[locParam]
+                formulaLoc = formulaLoc.replace(key, str(val))
+            res = eval(formulaLoc)
+            depth = totalDic_Rec
+            resDic[depth] = res
+            #res = 0
+            
+            #print('formula ->',formulaLoc, 'on depth ->',depth, '->', locParams, '->', res)
+        
+        #print('resDic ->', resDic)
+        print(' --- TryCalc ---')
+        
+        return resDic
+    
+class CFormulaVariables(models.Model):
+    RecID = models.BigAutoField(primary_key=True)
+    RecFormulaID = models.IntegerField(default = -1)    #привязка к формуле в CCalculations
+    RecVariable = models.CharField(max_length=100, default = '')
+    RecDictionaryPropertyID = models.IntegerField(default = -1)    #привязка к словарю свойств
+    RecDescription = models.CharField(max_length=100, default = '')
+    
+    def as_dict(self):
+        return {
+            'RecID': self.RecID
+            ,'RecFormulaID': self.RecFormulaID
+            ,'RecVariable': self.RecVariable
+            ,'RecDictionaryPropertyID': self.RecDictionaryPropertyID
+            ,'RecDescription': self.RecDescription
+        }
