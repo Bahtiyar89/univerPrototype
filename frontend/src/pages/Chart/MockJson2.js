@@ -108,7 +108,7 @@ export const traces = [
 
 export const graphs = [
   {
-    id: "item-0",
+    id: "0",
     name: "CALI",
     showticklabels: true,
     l: 50,
@@ -157,8 +157,8 @@ export const graphs = [
     ],
   },
   {
-    id: "item-1",
-    name: "Параметры",
+    id: "1",
+    name: "GL",
     yshowticklabels: false,
     l: 1,
     r: 1,
@@ -197,7 +197,7 @@ export const graphs = [
           size: 10,
           type: "scatter",
         },
-        name: "CALI",
+        name: "GL",
       },
       {
         marker: {
@@ -211,8 +211,8 @@ export const graphs = [
     ],
   },
   {
-    id: "item-2",
-    name: "GR",
+    id: "2",
+    name: "Параметры",
     l: 1,
     r: 1,
     traces: [
@@ -248,7 +248,7 @@ export const graphs = [
           size: 10,
           type: "scatter",
         },
-        name: "CALI",
+        name: "GR",
       },
       {
         marker: {
@@ -257,68 +257,10 @@ export const graphs = [
         },
         x: [10, 20],
         y: [550, 2900],
-        name: "",
+        name: "RDEP",
       },
     ],
 
-    color: "goldenrod",
-    yshowticklabels: false,
-  },
-  {
-    id: "item-3",
-    name: "RHOB",
-    l: 1,
-    r: 1,
-    traces: [
-      {
-        x: [
-          1.79868138, 1.7956413, 1.80073333, 8.24981689, 8.30395889, 8.33829117,
-        ],
-        y: [494.528, 494.68, 494.832, 3271.72, 3271.872, 3272.024],
-      },
-      {
-        marker: {
-          color: "transparent",
-          size: 0,
-        },
-        x: [10],
-        y: [3300],
-        name: "",
-      },
-    ],
-    color: "goldenrod",
-    yshowticklabels: false,
-  },
-  {
-    id: "item-4",
-    name: "NPHI",
-    l: 1,
-    r: 1,
-    traces: [
-      {
-        x: [
-          1.79868138, 1.7956413, 1.80073333, 8.24981689, 8.30395889, 8.33829117,
-        ],
-        y: [494.528, 494.68, 494.832, 3271.72, 3271.872, 3272.024],
-      },
-    ],
-
-    color: "goldenrod",
-    yshowticklabels: false,
-  },
-  {
-    id: "item-5",
-    name: "SP",
-    l: 1,
-    r: 50,
-    traces: [
-      {
-        x: [
-          1.79868138, 1.7956413, 1.80073333, 8.24981689, 8.30395889, 8.33829117,
-        ],
-        y: [494.528, 494.68, 494.832, 3271.72, 3271.872, 3272.024],
-      },
-    ],
     color: "goldenrod",
     yshowticklabels: false,
   },

@@ -3,15 +3,6 @@ import Plot from "react-plotly.js";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { graphs } from "./MockJson2";
 
-// a little function to help us with reordering the result
-const reorder = (list: any, startIndex: any, endIndex: any) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
-
 const grid = 0;
 
 const getItemStyle = (isDragging: any, draggableStyle: any) => ({
@@ -34,60 +25,7 @@ const getListStyle = (isDraggingOver: any) => ({
   overflow: "auto",
 });
 
-const TabletRenewed2 = (props: any) => {
-  const [items, setItems] = useState<any>([]);
-
-  const onDragEnd = (result: any) => {
-    // dropped outside the list
-
-    if (!result.destination) {
-      return;
-    }
-    if (result.destination.index === result.source.index) {
-      const newItems = items.filter(
-        (item: any) => item.id !== result.draggableId
-      );
-      setItems(newItems);
-      return;
-    }
-
-    const itemss = reorder(
-      items,
-      result.source.index,
-      result.destination.index
-    );
-
-    const lastEl = itemss.length - 1;
-    const newArr = itemss.map((item: any, index: any) => {
-      if (index == 0) {
-        return { ...item, yshowticklabels: true, l: 50, r: 1 };
-      } else if (lastEl == index) {
-        return { ...item, yshowticklabels: false, l: 1, r: 50 };
-      } else {
-        return { ...item, yshowticklabels: false, l: 1, r: 1 };
-      }
-    });
-
-    setItems(newArr);
-  };
-
-  useEffect(() => {
-    const lastEl = props.chartObjects.length - 1;
-    const newArr = props.chartObjects.map((item: any, index: any) => {
-      if (index == 0) {
-        return { ...item, yshowticklabels: true, l: 50, r: 1 };
-      } else if (lastEl == index) {
-        return { ...item, yshowticklabels: false, l: 1, r: 50 };
-      } else {
-        return { ...item, yshowticklabels: false, l: 1, r: 1 };
-      }
-    });
-
-    setItems(newArr);
-  }, [props.chartObjects]);
-
-  console.log("pr:", props);
-
+const TabletRenewed2 = ({ chartObjects, onDragEnd }: any) => {
   return (
     <div>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -98,7 +36,7 @@ const TabletRenewed2 = (props: any) => {
               style={getListStyle(snapshot.isDraggingOver)}
               {...provided.droppableProps}
             >
-              {props.chartObjects.map((item: any, index: any) => (
+              {chartObjects.map((item: any, index: any) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                   {(provided, snapshot) => (
                     <div
@@ -123,7 +61,7 @@ const TabletRenewed2 = (props: any) => {
                           width:
                             index === 0
                               ? 250
-                              : index + 1 === props.chartObjects.length
+                              : index + 1 === chartObjects.length
                               ? 250
                               : 200,
                           height: 750,

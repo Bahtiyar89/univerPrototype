@@ -20,7 +20,8 @@ interface Props {
   canvas: boolean;
   well: string;
   handleCanvas?: () => void;
-  handleChartColumn: () => void;
+  handleChartColumn: (val: string) => void;
+  newObjectToColumn: (id: string) => void;
   handleClick?: (item: any) => void;
   handleScreenType?: (type: any) => void;
   newColumn?: (name: any) => void;
@@ -32,6 +33,7 @@ const CanvasMenu = ({
   handleCanvas,
   handleClick,
   handleChartColumn,
+  newObjectToColumn,
   handleScreenType,
   newColumn,
 }: Props) => {
@@ -75,7 +77,7 @@ const CanvasMenu = ({
                     {item.params.map((i: any, index: number) => {
                       return (
                         <CButton
-                          onClick={() => handleChartColumn()}
+                          onClick={() => newColumn?.(i.name)}
                           color={i.color}
                         >
                           {i.name}
