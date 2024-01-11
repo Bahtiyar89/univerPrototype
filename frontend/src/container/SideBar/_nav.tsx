@@ -15,6 +15,7 @@ import {
   cibOpenstreetmap,
   cilChartLine,
   cilTablet,
+  cilCloudUpload,
 } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
 
@@ -48,15 +49,21 @@ const _nav: any = [
     icon: <CIcon icon={cilTablet} customClassName="nav-icon" />,
   },
   {
+    component: CNavItem,
+    name: "Загрузка LAS/CSV",
+    to: "/uploadfile",
+    icon: <CIcon icon={cilCloudUpload} customClassName="nav-icon" />,
+  },
+  {
     component: CNavGroup,
-    name: "Base",
+    name: "Общее",
     to: "/base",
     icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: "Планшет",
-        to: "/base/accordion",
+        name: "Скважины",
+        to: "/base/wells",
       },
       {
         component: CNavItem,

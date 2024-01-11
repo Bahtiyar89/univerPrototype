@@ -1,0 +1,10 @@
+.grid_wrapper {
+    padding: 0rem;
+    background-color: grey;
+    overflow: hidden;
+  
+    @media only screen and (max-width: 768px) {
+      overflow: scroll;
+    }
+  }
+  

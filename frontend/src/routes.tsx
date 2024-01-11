@@ -6,6 +6,8 @@ const TabletPage = React.lazy(() => import("./pages/TabletPage"));
 const DemoViewPage = React.lazy(() => import("./pages/crm/demo/view"));
 const MapViewPage = React.lazy(() => import("pages/Map/MapPage"));
 const ChartViewPage = React.lazy(() => import("pages/Chart/ChartPage"));
+const UploadFilePage = React.lazy(() => import("./pages/UploadFilePage"));
+const WellsPage = React.lazy(() => import("./pages/WellsPage"));
 
 const routes = [
   { path: "/", name: "Home" },
@@ -21,13 +23,14 @@ const routes = [
     name: "Demonstration",
     element: DemoViewPage,
   },
+  { path: "/uploadfile", name: "UploadFile", element: UploadFilePage },
   // { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: "/theme/map", name: "Colors", element: MapViewPage },
   { path: "/theme/chart", name: "Typography", element: ChartViewPage },
   { path: "/theme/typography", name: "Typography", element: DemoViewPage },
   // { path: '/base', name: 'Base', element: Cards, exact: true },
   { path: "/base/accordion", name: "Accordion", element: DemoViewPage },
-  // { path: '/base/breadcrumbs', name: 'Breadcrumbs', element: Breadcrumbs },
+  { path: "/base/wells", name: "Breadcrumbs", element: WellsPage },
   // { path: '/base/cards', name: 'Cards', element: Cards },
   // { path: '/base/carousels', name: 'Carousel', element: Carousels },
   // { path: '/base/collapses', name: 'Collapse', element: Collapses },
