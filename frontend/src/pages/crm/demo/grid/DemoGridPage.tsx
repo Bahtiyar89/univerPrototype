@@ -13,7 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import "./style.scss";
-import { useBranchOptionsQuery, useDemoListQuery } from "hook/query";
+import { useSystemParametersOptionsQuery } from "hook/query";
 import CIcon from "@coreui/icons-react";
 import { cilChevronDoubleDown, cilChevronDoubleUp } from "@coreui/icons";
 import CustomSpinner from "components/Spinner/CustomSpinner";
@@ -29,14 +29,13 @@ function DemonstrationPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>([]);
   const [searchParams, setSearchParams] = useState({
-    branchId: undefined,
-    fromDate: undefined,
+    wellId: undefined,
+    paramsId: undefined,
     toDate: undefined,
     result: "",
   });
 
-  const branchOptions = useBranchOptionsQuery({});
-  const demoListQuery = useDemoListQuery(searchParams);
+  const branchOptions = useSystemParametersOptionsQuery({});
 
   useEffect(() => {
     loadData();
@@ -44,7 +43,7 @@ function DemonstrationPage() {
 
   const loadData = () => {
     setLoading(true);
-    demoListQuery
+    /*  demoListQuery
       .refetch()
       .then((response: any) => {
         setData(response.data);
@@ -52,7 +51,7 @@ function DemonstrationPage() {
       .catch((error: any) => {
         console.error("err", error);
       })
-      .finally(() => setLoading(false));
+      .finally(() => setLoading(false));*/
   };
 
   const columns = [

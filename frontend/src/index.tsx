@@ -10,10 +10,8 @@ import { QueryClientProvider } from "react-query";
 import { queryClient } from "services/accaountAPI";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
-  </Provider>,
+  <QueryClientProvider client={queryClient}>
+    <App />
+  </QueryClientProvider>,
   document.getElementById("root")
 );
